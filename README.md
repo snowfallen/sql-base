@@ -1,4 +1,4 @@
-## Commands 
+## Base Commands 
 
 ### SELECT
 ```
