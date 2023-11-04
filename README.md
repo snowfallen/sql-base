@@ -142,6 +142,22 @@ GROUP BY column_name
 HAVING COUNT(*) > value;
 ```
 
+### Foreign key
+```
+CREATE TABLE Vendors (
+    VendorID INT PRIMARY KEY,
+    VendorName VARCHAR(255)
+);
+
+-- Create the 'Products' table with a foreign key
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(255),
+    VendorID INT, -- This is the foreign key column
+    FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID)
+);
+```
+
 ***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
 
 ### INNER JOIN
@@ -283,3 +299,152 @@ WHERE column_name operator value;
 ```
 
 ***WITH clause lets you store the result of a query in a temporary table using an alias. You can also define multiple temporary tables using a comma and with one instance of the WITH keyword.***
+
+## Types of relations
+
+### One-to-one (one person has only one passport)
+
+**Person Table:**
+
+| person_id | first_name | last_name | date_of_birth |
+|----------|------------|-----------|---------------|
+| 1        | John       | Doe       | 1980-05-15    |
+| 2        | Jane       | Smith     | 1990-03-20    |
+
+**Passport Table:**
+
+| passport_id | passport_number | expiration_date | person_id |
+|-------------|-----------------|-----------------|----------|
+| 101         | P123456789     | 2025-10-15      | 1        |
+| 102         | P987654321     | 2024-12-31      | 2        |
+
+
+### One-to-many relation (one city has many customers)
+
+***Create cities table***
+```
+CREATE TABLE cities ( id INT AUTO_INCREMENT PRIMARY KEY, city_name VARCHAR(255) );
+INSERT INTO cities (city_name) VALUES ('Berlin'), ('Lviw'), ('Zagreb'), ('New York'), ('Los Angeles'), ('Warsaw');
+```
+| id | city_name     |
+|----|-------------- |
+| 1  | Berlin        |
+| 2  | Lviv          |
+| 3  | Zagreb        |
+| 4  | New York      |
+| 5  | Los Angeles   |
+| 6  | Warsaw        |
+
+***Create customers table***
+```
+REATE TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, customer_name VARCHAR(255), city_id INT, FOREIGN KEY (city_id) REFERENCES cities(id));
+INSERT INTO customers(customer_name, city_id) VALUES ('Jewerly', 4), ('Bakery', 1), ('Cafe', 1), ('Restaurant', 3);
+```
+| id | customer_name | city_id |
+|----|--------------- | ------- |
+| 1  | Jewelry       | 4       |
+| 2  | Bakery        | 1       |
+| 3  | Cafe          | 1       |
+| 4  | Restaurant    | 3       |
+
+***Select Data***
+```
+SELECT * FROM `customers` INNER JOIN cities ON customers.city_id = cities.id;
+SELECT * FROM `customers` LEFT JOIN cities ON customers.city_id = cities.id;
+SELECT * FROM `customers` RIGHT JOIN cities ON customers.city_id = cities.id;
+```
+The first query (using INNER JOIN) returned only rows where cities and customers had a pair. Since we had 4 rows for customers and all 4 had related city defined, the final result also has 4 rows.
+| id | customer_name | city_id | id | city_name   |
+|----|---------------|---------|----|------------ |
+| 2  | Bakery        | 1       | 1  | Berlin      |
+| 3  | Cafe          | 1       | 1  | Berlin      |
+| 4  | Restaurant    | 3       | 3  | Zagreb      |
+| 1  | Jewelry       | 4       | 4  | New York    |
+
+
+The second query (customer LEFT JOIN city) returned the same result as the first one. That happened because all customers had related city defined. In case some customers wouldn’t have city_id defined (NULL), these customers would be included in this result too.
+| id | customer_name | city_id | id | city_name   |
+|----|---------------|---------|----|------------ |
+| 1  | Jewelry       | 4       | 4  | New York    |
+| 2  | Bakery        | 1       | 1  | Berlin      |
+| 3  | Cafe          | 1       | 1  | Berlin      |
+| 4  | Restaurant    | 3       | 3  | Zagreb      |
+
+
+The last query (city LEFT JOIN customer) returns more rows than the previous two queries. It returns all 4 rows they’ve returned, but also returns 3 more rows for cities where we have no customers. And that’s completely ok because if we wrote query this way, we obviously wanted to point to that fact.
+| id | customer_name | city_id | id | city_name   |
+|----|---------------|---------|----|------------ |
+| 3  | Cafe          | 1       | 1  | Berlin      |
+| 2  | Bakery        | 1       | 1  | Berlin      |
+| NULL | NULL        | NULL    | 2  | Belgrade    |
+| 4  | Restaurant    | 3       | 3  | Zagreb      |
+| 1  | Jewelry       | 4       | 4  | New York    |
+| NULL | NULL        | NULL    | 5  | Los Angeles |
+| NULL | NULL        | NULL    | 6  | Warsaw      |
+
+
+### Many-to-many (One student can enroll in multiple courses, and one course can be attended by multiple students)
+***students***
+```
+CREATE TABLE students ( student_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL );
+INSERT INTO students (name) VALUES ('Alice'), ('Bob'), ('Carol'), ('David');
+```
+| student_id | name    |
+|---------|-----------|
+| 1       | Alice   |
+| 2       | Bob     |
+| 3       | Carol   |
+| 4       | David   |
+
+***courses***
+```
+CREATE TABLE courses ( course_id INT AUTO_INCREMENT PRIMARY KEY, course_name VARCHAR(255) NOT NULL );
+INSERT INTO courses (course_name) VALUES ('Math'), ('Science'), ('History');
+```
+| course_id | course_name      |
+|----------|------------------|
+| 101      | Math            |
+| 102      | Science         |
+| 103      | History         |
+
+***student_courses***
+```
+CREATE TABLE student_courses
+(id INT PRIMARY KEY AUTO_INCREMENT,
+student_id INT,
+course_id INT,
+FOREIGN KEY (student_id) REFERENCES students(student_id),
+FOREIGN KEY (course_id) REFERENCES courses(course_id) );
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 1), (1, 2), (2, 2), (3, 3);
+```
+| student_id  | course_id |
+|-------------|-----------|
+| 1           | 101       |
+| 1           | 102       |
+| 2           | 102       |
+| 3           | 103       |
+
+***Get data***
+#### All students with courses
+```
+SELECT students.student_id, students.name, student_courses.course_id FROM students
+INNER JOIN student_courses
+ON students.student_id = student_courses.student_id;
+```
+| student_id | name    | course_id |
+|----------- |---------|----------- |
+| 1          | Alice   | 101       |
+| 1          | Alice   | 102       |
+| 2          | Bob     | 102       |
+| 3          | Carol   | 103       |
+
+#### All students without courses
+```
+SELECT students.student_id, students.name, student_courses.course_id FROM students
+LEFT JOIN student_courses
+ON students.student_id = student_courses.student_id
+WHERE student_courses.course_id IS NULL;
+```
+| student_id | name    | course_id |
+|----------- |---------|----------- |
+| 4          | David   | NULL      |
