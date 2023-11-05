@@ -5,6 +5,7 @@
 2. ***VARCHAR***: Represents a variable-length string. The length of the stored string is also specified in parentheses, e.g., VARCHAR(10). Unlike CHAR, VARCHAR only uses as much space as needed, so a string of 6 characters will occupy 6 characters plus an additional byte to store the length of the string. VARCHAR can store up to 65,535 bytes. Starting from MySQL 5.6, CHAR and VARCHAR types default to using the UTF-8 encoding, allowing variable-length storage based on character encoding.
 
 ***Additional Variable-Length Text Types:***
+
 3. ***TINYTEXT***: Stores text with a maximum length of 255 bytes.
 4. ***TEXT***: Stores text with a maximum length of 65 KB.
 5. ***MEDIUMTEXT***: Stores text with a maximum length of 16 MB.
