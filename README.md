@@ -781,3 +781,50 @@ In summary, non-correlated subqueries are independent and can be executed once, 
 6. **Fifth Level (5NF - Fifth Normal Form)**:
    - The table is in 4NF, meaning it has atomic values, all columns depend on the primary key, there are no transitive dependencies or multivalued dependencies.
    - The fifth level of normalization tasks you with avoiding join dependencies. This means that data that can be reconstructed by joining tables should be separated into individual tables that are stored without redundancy.
+  
+## ACID
+
+***ACID*** is an acronym that represents a set of properties ensuring reliable transaction processing in a database. This acronym consists of the following properties:
+
+***Atomicity***: This property ensures that a transaction is treated as a single, indivisible unit of work. It means that all operations within a transaction either fully execute or are fully canceled in case of an error. In other words, a transaction is an all-or-nothing concept.
+
+***Consistency***: Consistency guarantees that a transaction transitions the database from one state of integrity to another. In other words, a transaction must adhere to specific rules and constraints that maintain data integrity. If a transaction violates any rules or constraints, it is rolled back.
+
+***Isolation***: Isolation ensures that the operations of one transaction are isolated from the operations of other transactions. This means that concurrent execution of multiple transactions does not lead to conflicts or anomalies. Isolation levels, such as "Read Uncommitted," "Read Committed," "Repeatable Read," and "Serializable," define the degree of isolation between transactions.
+
+***Durability***: Durability ensures that once a transaction is committed, its changes are permanent and survive any subsequent failures, including system crashes. Typically, this property is achieved by recording the transaction's changes to non-volatile storage, such as a hard disk.   
+
+***Here, we will discuss the main problems of transaction isolation in databases, namely dirty reads, non-repeatable reads, and phantom reads:***
+
+***Dirty Reads***:
+Issue: This problem occurs when one transaction reads uncommitted (unapproved) data that may be subsequently rolled back or revoked by another transaction.
+Example: Transaction A reads a value from the database that Transaction B changes and revokes before committing.
+Consequences: This can lead to incorrect results and data inconsistency. Transaction A reads data that no longer reflects the current state of the system.
+
+***Non-Repeatable Reads***:
+Issue: This problem arises when one transaction reads the same value twice, but in the meantime, another transaction changes this value, causing the first reading to differ from the second.
+Example: Transaction A reads the "Balance" field and then reads it again, but in the meantime, Transaction B changes this balance.
+Consequences: This can lead to unexpected results as the value read by the transaction can change between the first and second readings, violating data consistency.
+
+***Phantom Reads***:
+Issue: This problem occurs when one transaction reads a set of records, but in the meantime, another transaction adds or removes records that match the criteria of the first query.
+Example: Transaction A reads all customer orders, and another transaction B deletes one of these orders.
+Consequences: This can result in unfair outcomes and data inconsistency as Transaction A receives records that should not exist. 
+
+### Transactions isolation levels
+
+***Read Uncommitted***:
+At this level, transactions can read even uncommitted changes made by other transactions.
+It allows for problems like dirty reads, non-repeatable reads, and phantom reads.
+
+***Read Committed***:
+Transactions wait for other transactions to finish their changes before reading data.
+It prevents problems like dirty reads but can still lead to non-repeatable reads and phantom reads.
+
+***Repeatable Read***:
+Transactions wait for other transactions to finish their changes before reading data. Additionally, they lock the rows they are reading to prevent changes by other transactions.
+It prevents problems like dirty reads and non-repeatable reads but still allows for phantom reads.
+
+***Serializable***:
+At the highest level, transactions block each other to avoid all forms of interaction anomalies.
+It prohibits all types of reading anomalies, such as dirty reads, non-repeatable reads, and phantom reads. However, it comes at the cost of executing everything sequentially, which can lead to limited resource availability. This level imposes the most restrictions on parallelism, potentially resulting in a high number of waiting transactions and reduced productivity.
