@@ -52,6 +52,8 @@ SELECT column_name
 FROM table_name;
 ```
 
+***SELECT statements are used to fetch data from a database. Every query will begin with SELECT.***
+
 ### LIMIT
 ```sql
 SELECT column_name(s)
@@ -60,8 +62,6 @@ LIMIT number;
 ```
 
 ***LIMIT is a clause that lets you specify the maximum number of rows the result set will have.***
-
-***SELECT statements are used to fetch data from a database. Every query will begin with SELECT.***
 
 ### SELECT DISTINCT
 ```sql
