@@ -62,6 +62,14 @@ FROM table_name;
 
 ***SELECT DISTINCT specifies that the statement is going to be a query that returns unique values in the specified column(s).***
 
+### AS
+```
+SELECT column_name AS 'Alias'
+FROM table_name;
+```
+
+***AS is a keyword in SQL that allows you to rename a column or table using an alias.***
+
 ### WHERE
 ```
 SELECT column_name(s)
@@ -76,6 +84,26 @@ WHERE column_name operator value;
 WHERE expression [NOT] IN (expression)
 ```
 ***The IN operator defines a set of values that columns should have. The expression within the parentheses after IN defines a set of values.***
+
+### OR
+```
+SELECT column_name
+FROM table_name
+WHERE column_name = value_1
+   OR column_name = value_2;
+```
+
+***OR is an operator that filters the result set to only include rows where either condition is true.***
+
+### AND
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_1 = value_1
+  AND column_2 = value_2;
+```
+
+***AND is an operator that combines two conditions. Both conditions must be true for the row to be included in the result set.***
 
 ### GROUP BY
 ```
@@ -94,6 +122,15 @@ GROUP BY column_name
 HAVING COUNT(*) > value;
 ```
 ***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
+
+### BETWEEN
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value_1 AND value_2;
+```
+
+***The BETWEEN operator is used to filter the result set within a certain range. The values can be numbers, text or dates.***
 
 ### CREATE TABLE
 ```
@@ -139,41 +176,6 @@ WHERE some_column = some_value;
 
 ***DELETE statements are used to remove rows from a table.***
 
-### AND
-```
-SELECT column_name(s)
-FROM table_name
-WHERE column_1 = value_1
-  AND column_2 = value_2;
-```
-
-***AND is an operator that combines two conditions. Both conditions must be true for the row to be included in the result set.***
-
-### AS
-```
-SELECT column_name AS 'Alias'
-FROM table_name;
-```
-
-***AS is a keyword in SQL that allows you to rename a column or table using an alias.***
-
-### AVG()
-```
-SELECT AVG(column_name)
-FROM table_name;
-```
-
-***AVG() is an aggregate function that returns the average value for a numeric column.***
-
-### BETWEEN
-```
-SELECT column_name(s)
-FROM table_name
-WHERE column_name BETWEEN value_1 AND value_2;
-```
-
-***The BETWEEN operator is used to filter the result set within a certain range. The values can be numbers, text or dates.***
-
 ### CASE
 ```
 SELECT column_name,
@@ -186,14 +188,6 @@ FROM table_name;
 ```
 
 ***CASE statements are used to create different outputs (usually in the SELECT statement). It is SQL’s way of handling if-then logic.***
-
-### COUNT()
-```
-SELECT COUNT(column_name)
-FROM table_name;
-```
-
-***COUNT() is a function that takes the name of a column as an argument and counts the number of rows where the column is not NULL.***
 
 ### Foreign key
 ```
@@ -322,15 +316,21 @@ FROM table_name;
 
 ***MIN() is a function that takes the name of a column as an argument and returns the smallest value in that column.***
 
-### OR
+### AVG()
 ```
-SELECT column_name
-FROM table_name
-WHERE column_name = value_1
-   OR column_name = value_2;
+SELECT AVG(column_name)
+FROM table_name;
 ```
 
-***OR is an operator that filters the result set to only include rows where either condition is true.***
+***AVG() is an aggregate function that returns the average value for a numeric column.***
+
+### COUNT()
+```
+SELECT COUNT(column_name)
+FROM table_name;
+```
+
+***COUNT() is a function that takes the name of a column as an argument and counts the number of rows where the column is not NULL.***
 
 ### ORDER BY
 ```
