@@ -71,6 +71,12 @@ WHERE column_name operator value;
 
 ***WHERE is a clause that indicates you want to filter the result set to include only rows where the following condition is true.***
 
+### IN 
+```
+WHERE expression [NOT] IN (expression)
+```
+***The IN operator defines a set of values that columns should have. The expression within the parentheses after IN defines a set of values.***
+
 ### GROUP BY
 ```
 SELECT column_name, COUNT(*)
