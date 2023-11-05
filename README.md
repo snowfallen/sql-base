@@ -71,6 +71,24 @@ WHERE column_name operator value;
 
 ***WHERE is a clause that indicates you want to filter the result set to include only rows where the following condition is true.***
 
+### GROUP BY
+```
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name;
+```
+
+***GROUP BY is a clause in SQL that is only used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.***
+
+### HAVING
+```
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name
+HAVING COUNT(*) > value;
+```
+***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
+
 ### CREATE TABLE
 ```
 CREATE TABLE table_name (
@@ -171,23 +189,6 @@ FROM table_name;
 
 ***COUNT() is a function that takes the name of a column as an argument and counts the number of rows where the column is not NULL.***
 
-### GROUP BY
-```
-SELECT column_name, COUNT(*)
-FROM table_name
-GROUP BY column_name;
-```
-
-***GROUP BY is a clause in SQL that is only used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.***
-
-### HAVING
-```
-SELECT column_name, COUNT(*)
-FROM table_name
-GROUP BY column_name
-HAVING COUNT(*) > value;
-```
-
 ### Foreign key
 ```
 CREATE TABLE Vendors (
@@ -203,8 +204,6 @@ CREATE TABLE Products (
     FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID)
 );
 ```
-
-***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
 
 ### INNER JOIN
 ```
@@ -271,6 +270,9 @@ SELECT column_name(s)
 FROM table_name
 WHERE column_name LIKE pattern;
 ```
+
+* `%`: Matches any substring, which can have any number of characters, and the substring may not contain any characters at all.
+* `_`: Matches any single character.
 
 ***LIKE is a special operator used with the WHERE clause to search for a specific pattern in a column.***
 
