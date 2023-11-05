@@ -282,6 +282,21 @@ WHERE column_name LIKE pattern;
 
 ***LIKE is a special operator used with the WHERE clause to search for a specific pattern in a column.***
 
+### REGEXP
+```
+WHERE expression [NOT] REGEXP regular_expression
+```
+
+The regular expression can include the following special characters:
+- `^`: Specifies the start of the string.
+- `$`: Specifies the end of the string.
+- `.`: Matches any single character.
+- `[characters]`: Matches any single character from within the brackets.
+- `[start_char-end_char]`: Matches any single character from the character range.
+- `|`: Separates two string patterns, and the value must match one of these patterns.
+
+***The REGEXP operator allows you to specify a regular expression that a column's value should match. In this regard, REGEXP provides a more sophisticated and complex way of filtering compared to the LIKE operator.***
+
 ### LIMIT
 ```
 SELECT column_name(s)
