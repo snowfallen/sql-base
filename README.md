@@ -318,6 +318,67 @@ CREATE TABLE Products (
     FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID)
 );
 ```
+## Keys Types
+1. **Primary Key**:
+   - This is a unique key that identifies each record in a database table.
+   - It is typically used to uniquely identify records in a table.
+
+2. **Candidate Key**:
+   - This is a set of columns in a table that can also be used as a primary key.
+   - A candidate key has the same uniqueness property as the primary key.
+
+3. **Super Key**:
+   - This is a larger set of columns that can identify records but may not necessarily be unique.
+   - It includes candidate keys and possibly other columns.
+
+4. **Foreign Key**:
+   - This is a column or set of columns that references the primary key (or another unique key) in another table.
+   - It is used to create a relationship between tables.
+
+5. **Composite Key**:
+   - This is a key composed of two or more columns and determines the uniqueness of records only in the combination of these columns.
+
+6. **Alternate Key**:
+   - This is a key that could be used as a primary key if the primary key is absent.
+   - It can be a candidate key or another unique key.
+
+7. **Unique Key**:
+   - This is a key that guarantees the uniqueness of values in a column but allows one value to be NULL.
+  
+Here are several database tables with examples of different types of keys:
+
+1. **Table "Users"**:
+   - Primary Key: "user_id"
+   - Candidate Key: "username" (if it is a unique value for each user)
+   - Foreign Key: "address_id" (references the user's address)
+
+| user_id | username | address_id |
+|--------|----------|------------|
+| 1      | user1    | 101        |
+| 2      | user2    | 102        |
+| 3      | user3    | 103        |
+
+2. **Table "Orders"**:
+   - Primary Key: "order_id"
+   - Foreign Key: "customer_id" (references the user)
+
+| order_id | order_date | customer_id |
+|---------|------------|-------------|
+| 101     | 2023-01-15 | 1           |
+| 102     | 2023-01-20 | 2           |
+| 103     | 2023-01-25 | 1           |
+
+3. **Table "Books"**:
+   - Composite Key: "author" and "title" (if both together are unique)
+   - Alternate Key: "ISBN" (can be used as a primary key if the ISBN is unique)
+
+| author          | title                 | ISBN            |
+|-----------------|-----------------------|-----------------|
+| J.K. Rowling    | Harry Potter          | 9780545582889   |
+| George Orwell   | 1984                  | 9780451524935   |
+| J.K. Rowling    | The Chamber of Secrets | 9780439064866   |
+
+## Joins 
 
 ### INNER JOIN
 ```sql
