@@ -757,3 +757,27 @@ ON table_name (column_name);
    In this case, the subquery is correlated because it references the "department_id" column from the outer query.
 
 In summary, non-correlated subqueries are independent and can be executed once, while correlated subqueries are dependent on the outer query and are executed for each row of the outer query. The choice between them depends on the specific requirements of your query.
+
+## Normal forms
+1. **First Level (1NF - First Normal Form)**:
+   - Each column must have atomic values, meaning the values in the column cannot be complex or arrays. For example, if you have a "Phones" column, it should not contain a list of phone numbers; each number should be in a separate row.
+   - All values in each column must have the same data type. This means that all values in a column should be numbers, strings, dates, etc., depending on the defined data type for that column.
+
+2. **Second Level (2NF - Second Normal Form)**:
+   - A table that is already in 1NF, meaning all columns have atomic values and the appropriate data type.
+   - The second level of normalization additionally requires that all columns, except the primary key, depend on the entire primary key. This means that the data in the table should be organized in such a way that no column depends on another column but depends on the primary key. For example, if you have an "Orders" table with columns "Order Number," "Product," and "Quantity," each order entry should have a unique index, and other columns ("Product" and "Quantity") should depend on the order number.
+
+3. **Third Level (3NF - Third Normal Form)**:
+   - The table is already in 2NF, which means it has atomic values, and all columns depend on the primary key.
+   - The third level of normalization additionally requires the absence of transitive dependencies, meaning columns should not depend on each other through other columns. For example, if "Salary" depends on "Position," and "Position" depends on "Department," then "Salary" should not depend on "Department" (transitive dependency).
+   
+4. **Boyce-Codd Normal Form (BCNF) - Enhanced Third Level**:
+   - This level of normalization additionally requires the absence of dependencies that are not superkeys. In other words, every non-key column must be fully functionally dependent on superkeys, and there should be no redundant or unnecessary dependencies (they should depend on the full key).
+
+5. **Fourth Level (4NF - Fourth Normal Form)**:
+   - The table is in 3NF, which means it has atomic values, all columns depend on the primary key, and there are no transitive dependencies.
+   - The fourth level of normalization sets the requirement to avoid multivalued dependencies. This means that if many values in one column correspond to one value in another column, these values should be placed in a separate table. For example, if you have an "Orders" table with columns "Order Number" and "Products" (where each order number has multiple products), you could create a separate "Order Products" table, where each record associates an order number with a product.
+
+6. **Fifth Level (5NF - Fifth Normal Form)**:
+   - The table is in 4NF, meaning it has atomic values, all columns depend on the primary key, there are no transitive dependencies or multivalued dependencies.
+   - The fifth level of normalization tasks you with avoiding join dependencies. This means that data that can be reconstructed by joining tables should be separated into individual tables that are stored without redundancy.
