@@ -579,6 +579,144 @@ WHERE student_courses.course_id IS NULL;
 |----------- |---------|----------- |
 | 4          | David   | NULL      |
 
+## Indexes types
+1. **Primary Key Index**:
+   - This is a unique index created for the primary key of a table.
+   - It ensures fast access to specific records as they are unique.
+   - It is automatically created for the primary key but can also be created manually.
+
+```sql
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    address_id INT,
+    FOREIGN KEY (address_id) REFERENCES Addresses(address_id)
+);
+```
+
+2. **Unique Index**:
+   - This is an index that ensures the uniqueness of values in the indexed column.
+   - Used when you want values in a specific column to be unique but not necessarily a primary key.
+   - Can be created for any column, but the values in this column must be unique.
+
+```sql
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    product_code VARCHAR(20) UNIQUE,
+    price DECIMAL(10, 2)
+);
+```
+or
+```sql
+CREATE UNIQUE INDEX unique_index_name
+ON table_name (column_name);
+```
+
+3. **Clustered Index**:
+   - This is a special type of index that affects the physical storage of data in a table.
+   - It determines the order of rows in the table based on the values of the indexed column.
+   - A table can have only one clustered index, and it is automatically created for the primary key.
+
+```sql
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE,
+    customer_id INT,
+    product_id INT,
+    CLUSTERED INDEX (order_id)
+);
+```
+or
+```sql
+CREATE CLUSTERED INDEX clustered_index_name
+ON table_name (column_name);
+```
+
+4. **Non-Clustered Index**:
+   - This is another type of index that does not affect the physical storage of data in the table.
+   - Created to improve the performance of search and sort operations, but it doesn't change the order of data in the table.
+
+```sql
+CREATE TABLE Employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    department_id INT,
+    INDEX (department_id)
+);
+```
+or
+```sql
+CREATE [UNIQUE] INDEX nonclustered_index_name
+ON table_name (column_name);
+```
+
+5. **Full-Text Index**:
+   - Used to optimize searching full-text data, such as in documents or columns with textual data.
+   - Allows advanced searching and filtering of full-text data.
+
+```sql
+CREATE TABLE Articles (
+    article_id INT PRIMARY KEY,
+    title VARCHAR(200),
+    content TEXT,
+    FULLTEXT INDEX (content)
+);
+```
+or
+```sql
+CREATE FULLTEXT INDEX fulltext_index_name
+ON table_name (column_name);
+```
+
+6. **Composite Index**:
+   - This is an index created for a combination of two or more columns.
+   - Used to optimize operations that involve a combination of multiple columns in queries.
+
+```sql
+CREATE TABLE Orders (
+    order_id INT,
+    product_id INT,
+    order_date DATE,
+    PRIMARY KEY (order_id, product_id),
+    NONCLUSTERED INDEX (order_date)
+);
+```
+or
+```sql
+CREATE UNIQUE INDEX composite_index_name
+ON table_name (column1_name, column2_name);
+```
+
+7. **Bitmap Index**:
+   - Used to create an index based on bitmaps, where each bit corresponds to a specific value.
+   - Typically used to optimize data filtering operations in large tables.
+
+```sql
+CREATE TABLE Sales (
+    sale_id INT PRIMARY KEY,
+    product_id INT,
+    sale_date DATE,
+    BITMAP INDEX (product_id)
+);
+```
+or
+```sql
+CREATE UNIQUE BITMAP INDEX bitmap_index_name
+ON table_name (column_name);
+```
+
+***Summury***
+| Index Type | Uniqueness | Clustered | Description |
+|---|---|---|---|
+| Primary Key | Yes | Yes | A unique index that is automatically created for the primary key of a table. |
+| Unique | Yes | No | An index that ensures that no two rows in the table have the same value in the indexed column. |
+| Clustered | No | Yes | A special type of index that determines the physical order of rows in the table based on the values of the indexed column. |
+| Non-Clustered | No | No | An index that is used to improve the performance of search and sort operations, but does not affect the physical order of rows in the table. |
+| Full-Text | No | No | An index that is used to optimize the search performance of textual data. |
+| Composite | Yes/No | Yes/No | An index that is created on two or more columns. |
+| Bitmap | Yes/No | Yes/No | An index that is used to create an index based on bitmaps, where each bit corresponds to a specific value. |
+
 ## Correlated and Non-Correlated Subqueries:
 
 1. **Non-Correlated Subquery (Independent Subquery)**:
