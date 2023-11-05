@@ -1,3 +1,48 @@
+## MySQL Data types
+
+#### Character Types:
+1. ***CHAR***: Represents a fixed-length string. The length of the stored string is specified in parentheses, e.g., CHAR(10), which indicates a string of ten characters. If a shorter string (e.g., 6 characters) is stored in this column, it is padded with spaces to reach the specified length (10 characters). CHAR can store up to 255 bytes.
+2. ***VARCHAR***: Represents a variable-length string. The length of the stored string is also specified in parentheses, e.g., VARCHAR(10). Unlike CHAR, VARCHAR only uses as much space as needed, so a string of 6 characters will occupy 6 characters plus an additional byte to store the length of the string. VARCHAR can store up to 65,535 bytes. Starting from MySQL 5.6, CHAR and VARCHAR types default to using the UTF-8 encoding, allowing variable-length storage based on character encoding.
+
+***Additional Variable-Length Text Types:***
+3. ***TINYTEXT***: Stores text with a maximum length of 255 bytes.
+4. ***TEXT***: Stores text with a maximum length of 65 KB.
+5. ***MEDIUMTEXT***: Stores text with a maximum length of 16 MB.
+6. ***LONGTEXT***: Stores text with a maximum length of 4 GB.
+
+#### Numeric Types:
+1. ***TINYINT***: Represents integers from -128 to 127 and occupies 1 byte.
+2. ***BOOL (or BOOLEAN)***: It is essentially an alias for TINYINT(1) and can store values 0 and 1. It can also accept TRUE (equivalent to 1) and FALSE (equivalent to 0) as values.
+3. ***TINYINT UNSIGNED***: Represents integers from 0 to 255 and occupies 1 byte.
+4. ***SMALLINT***: Represents integers from -32,768 to 32,767 and occupies 2 bytes.
+5. ***SMALLINT UNSIGNED***: Represents integers from 0 to 65,535 and occupies 2 bytes.
+6. ***MEDIUMINT***: Represents integers from -8,388,608 to 8,388,607 and occupies 3 bytes.
+7. ***MEDIUMINT UNSIGNED***: Represents integers from 0 to 16,777,215 and occupies 3 bytes.
+8. ***INT***: Represents integers from -2,147,483,648 to 2,147,483,647 and occupies 4 bytes.
+9. ***INT UNSIGNED***: Represents integers from 0 to 4,294,967,295 and occupies 4 bytes.
+10. ***BIGINT***: Represents integers from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 and occupies 8 bytes.
+11. ***BIGINT UNSIGNED***: Represents integers from 0 to 18,446,744,073,709,551,615 and occupies 8 bytes.
+12. ***DECIMAL***: Stores numbers with fixed precision. It accepts two parameters, precision and scale, as DECIMAL(precision, scale). Precision represents the maximum number of digits, and scale represents the maximum number of digits after the decimal point. The data size in bytes for DECIMAL depends on the stored value.
+13. ***FLOAT***: Stores single-precision floating-point numbers with optional precision and scale specified as FLOAT(M,D), where M is the total number of digits, and D is the number of digits after the decimal point.
+14. ***DOUBLE***: Stores double-precision floating-point numbers with optional precision and scale specified as DOUBLE(M,D), where M is the total number of digits, and D is the number of digits after the decimal point.
+
+#### Date and Time Types:
+1. ***DATE***: Stores dates in the range from January 1, 1000, to December 31, 9999. It uses the "yyyy-mm-dd" format by default and occupies 3 bytes.
+2. ***TIME***: Stores time values in the range from -838:59:59 to 838:59:59. It uses the "hh:mm:ss" format by default and occupies 3 bytes.
+3. ***DATETIME***: Combines date and time values in the range from January 1, 1000, to December 31, 9999. It uses the "yyyy-mm-dd hh:mm:ss" format by default and occupies 8 bytes.
+4. ***TIMESTAMP***: Stores date and time values in the range from "1970-01-01 00:00:01" UTC to "2038-01-19 03:14:07" UTC. It occupies 4 bytes.
+5. ***YEAR***: Stores a 4-digit year value in the range from 1901 to 2155 and occupies 1 byte.
+
+#### Composite Types:
+1. ***ENUM***: Stores a single value from a list of allowed values and occupies 1-2 bytes.
+2. ***SET***: Stores multiple values (up to 64 values) from a list of allowed values and occupies 1-8 bytes.
+
+#### Binary Types:
+1. ***TINYBLOB***: Stores binary data as a string with a maximum length of 255 bytes.
+2. ***BLOB***: Stores binary data as a string with a maximum length of 65 KB.
+3. ***MEDIUMBLOB***: Stores binary data as a string with a maximum length of 16 MB.
+4. ***LONGBLOB***: Stores binary data as a string with a maximum length of 4 GB.
+
 ## Base Commands 
 
 ### SELECT
