@@ -517,3 +517,32 @@ WHERE student_courses.course_id IS NULL;
 | student_id | name    | course_id |
 |----------- |---------|----------- |
 | 4          | David   | NULL      |
+
+## Correlated and Non-Correlated Subqueries:
+
+1. **Non-Correlated Subquery (Independent Subquery)**:
+   - A non-correlated subquery is a subquery that can be executed independently of the outer query.
+   - It does not reference any columns from the outer query.
+   - It typically returns a single value or a set of values.
+   - Non-correlated subqueries are usually more efficient because they only need to be executed once.
+
+   ```sql
+   SELECT product_name
+   FROM products
+   WHERE product_id IN (SELECT product_id FROM orders WHERE order_date = '2023-01-01');
+   ```
+   In this case, the subquery is non-correlated because it doesn't depend on the outer query.
+
+2. **Correlated Subquery**:
+   - A correlated subquery is a subquery that is dependent on the outer query and references columns from the outer query.
+   - It is executed for each row processed by the outer query.
+   - Correlated subqueries are typically used when you need to compare values between the subquery and the current row of the outer query.
+     
+   ```sql
+   SELECT employee_name
+   FROM employees e
+   WHERE e.salary > (SELECT AVG(salary) FROM employees WHERE department_id = e.department_id);
+   ```
+   In this case, the subquery is correlated because it references the "department_id" column from the outer query.
+
+In summary, non-correlated subqueries are independent and can be executed once, while correlated subqueries are dependent on the outer query and are executed for each row of the outer query. The choice between them depends on the specific requirements of your query.
