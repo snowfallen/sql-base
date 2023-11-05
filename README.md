@@ -607,7 +607,9 @@ CREATE TABLE Products (
     price DECIMAL(10, 2)
 );
 ```
+
 or
+
 ```sql
 CREATE UNIQUE INDEX unique_index_name
 ON table_name (column_name);
@@ -627,7 +629,9 @@ CREATE TABLE Orders (
     CLUSTERED INDEX (order_id)
 );
 ```
+
 or
+
 ```sql
 CREATE CLUSTERED INDEX clustered_index_name
 ON table_name (column_name);
@@ -645,7 +649,9 @@ CREATE TABLE Employees (
     INDEX (department_id)
 );
 ```
+
 or
+
 ```sql
 CREATE [UNIQUE] INDEX nonclustered_index_name
 ON table_name (column_name);
@@ -663,7 +669,9 @@ CREATE TABLE Articles (
     FULLTEXT INDEX (content)
 );
 ```
+
 or
+
 ```sql
 CREATE FULLTEXT INDEX fulltext_index_name
 ON table_name (column_name);
@@ -682,7 +690,9 @@ CREATE TABLE Orders (
     NONCLUSTERED INDEX (order_date)
 );
 ```
+
 or
+
 ```sql
 CREATE UNIQUE INDEX composite_index_name
 ON table_name (column1_name, column2_name);
@@ -700,7 +710,9 @@ CREATE TABLE Sales (
     BITMAP INDEX (product_id)
 );
 ```
+
 or
+
 ```sql
 CREATE UNIQUE BITMAP INDEX bitmap_index_name
 ON table_name (column_name);
