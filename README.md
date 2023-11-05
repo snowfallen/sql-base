@@ -52,6 +52,15 @@ SELECT column_name
 FROM table_name;
 ```
 
+### LIMIT
+```
+SELECT column_name(s)
+FROM table_name
+LIMIT number;
+```
+
+***LIMIT is a clause that lets you specify the maximum number of rows the result set will have.***
+
 ***SELECT statements are used to fetch data from a database. Every query will begin with SELECT.***
 
 ### SELECT DISTINCT
@@ -113,15 +122,6 @@ GROUP BY column_name;
 ```
 
 ***GROUP BY is a clause in SQL that is only used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.***
-
-### HAVING
-```
-SELECT column_name, COUNT(*)
-FROM table_name
-GROUP BY column_name
-HAVING COUNT(*) > value;
-```
-***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
 
 ### BETWEEN
 ```
@@ -189,6 +189,120 @@ FROM table_name;
 
 ***CASE statements are used to create different outputs (usually in the SELECT statement). It is SQL’s way of handling if-then logic.***
 
+### IS NULL / IS NOT NULL
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IS NULL;
+```
+
+***IS NULL and IS NOT NULL are operators used with the WHERE clause to test for empty values.***
+
+### LIKE
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_name LIKE pattern;
+```
+
+* `%`: Matches any substring, which can have any number of characters, and the substring may not contain any characters at all.
+* `_`: Matches any single character.
+
+***LIKE is a special operator used with the WHERE clause to search for a specific pattern in a column.***
+
+### REGEXP
+```
+WHERE expression [NOT] REGEXP regular_expression
+```
+
+The regular expression can include the following special characters:
+- `^`: Specifies the start of the string.
+- `$`: Specifies the end of the string.
+- `.`: Matches any single character.
+- `[characters]`: Matches any single character from within the brackets.
+- `[start_char-end_char]`: Matches any single character from the character range.
+- `|`: Separates two string patterns, and the value must match one of these patterns.
+
+***The REGEXP operator allows you to specify a regular expression that a column's value should match. In this regard, REGEXP provides a more sophisticated and complex way of filtering compared to the LIKE operator.***
+
+### MAX()
+```
+SELECT MAX(column_name)
+FROM table_name;
+```
+
+***MAX() is a function that takes the name of a column as an argument and returns the largest value in that column.***
+
+### MIN()
+```
+SELECT MIN(column_name)
+FROM table_name;
+```
+
+***MIN() is a function that takes the name of a column as an argument and returns the smallest value in that column.***
+
+### AVG()
+```
+SELECT AVG(column_name)
+FROM table_name;
+```
+
+***AVG() is an aggregate function that returns the average value for a numeric column.***
+
+### COUNT()
+```
+SELECT COUNT(column_name)
+FROM table_name;
+```
+
+***COUNT() is a function that takes the name of a column as an argument and counts the number of rows where the column is not NULL.***
+
+### SUM
+```
+SELECT SUM(column_name)
+FROM table_name;
+```
+
+***SUM() is a function that takes the name of a column as an argument and returns the sum of all the values in that column.***
+
+### HAVING
+```
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name
+HAVING COUNT(*) > value;
+```
+***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
+
+### ORDER BY
+```
+SELECT column_name
+FROM table_name
+ORDER BY column_name ASC | DESC;
+```
+
+***ORDER BY is a clause that indicates you want to sort the result set by a particular column either alphabetically or numerically.***
+
+### ROUND()
+```
+SELECT ROUND(column_name, integer)
+FROM table_name;
+```
+
+***ROUND() is a function that takes a column name and an integer as arguments. It rounds the values in the column to the number of decimal places specified by the integer.***
+
+### WITH
+```
+WITH temporary_name AS (
+   SELECT *
+   FROM table_name)
+SELECT *
+FROM temporary_name
+WHERE column_name operator value;
+```
+
+***WITH clause lets you store the result of a query in a temporary table using an alias. You can also define multiple temporary tables using a comma and with one instance of the WITH keyword.***
+
 ### Foreign key
 ```
 CREATE TABLE Vendors (
@@ -254,120 +368,6 @@ ON table_1.column_name = table_2.column_name;
 ```
 
 ***Returns all records when there is a match in either left or right table***
-
-### IS NULL / IS NOT NULL
-```
-SELECT column_name(s)
-FROM table_name
-WHERE column_name IS NULL;
-```
-
-***IS NULL and IS NOT NULL are operators used with the WHERE clause to test for empty values.***
-
-### LIKE
-```
-SELECT column_name(s)
-FROM table_name
-WHERE column_name LIKE pattern;
-```
-
-* `%`: Matches any substring, which can have any number of characters, and the substring may not contain any characters at all.
-* `_`: Matches any single character.
-
-***LIKE is a special operator used with the WHERE clause to search for a specific pattern in a column.***
-
-### REGEXP
-```
-WHERE expression [NOT] REGEXP regular_expression
-```
-
-The regular expression can include the following special characters:
-- `^`: Specifies the start of the string.
-- `$`: Specifies the end of the string.
-- `.`: Matches any single character.
-- `[characters]`: Matches any single character from within the brackets.
-- `[start_char-end_char]`: Matches any single character from the character range.
-- `|`: Separates two string patterns, and the value must match one of these patterns.
-
-***The REGEXP operator allows you to specify a regular expression that a column's value should match. In this regard, REGEXP provides a more sophisticated and complex way of filtering compared to the LIKE operator.***
-
-### LIMIT
-```
-SELECT column_name(s)
-FROM table_name
-LIMIT number;
-```
-
-***LIMIT is a clause that lets you specify the maximum number of rows the result set will have.***
-
-### MAX()
-```
-SELECT MAX(column_name)
-FROM table_name;
-```
-
-***MAX() is a function that takes the name of a column as an argument and returns the largest value in that column.***
-
-### MIN()
-```
-SELECT MIN(column_name)
-FROM table_name;
-```
-
-***MIN() is a function that takes the name of a column as an argument and returns the smallest value in that column.***
-
-### AVG()
-```
-SELECT AVG(column_name)
-FROM table_name;
-```
-
-***AVG() is an aggregate function that returns the average value for a numeric column.***
-
-### COUNT()
-```
-SELECT COUNT(column_name)
-FROM table_name;
-```
-
-***COUNT() is a function that takes the name of a column as an argument and counts the number of rows where the column is not NULL.***
-
-### ORDER BY
-```
-SELECT column_name
-FROM table_name
-ORDER BY column_name ASC | DESC;
-```
-
-***ORDER BY is a clause that indicates you want to sort the result set by a particular column either alphabetically or numerically.***
-
-### ROUND()
-```
-SELECT ROUND(column_name, integer)
-FROM table_name;
-```
-
-***ROUND() is a function that takes a column name and an integer as arguments. It rounds the values in the column to the number of decimal places specified by the integer.***
-
-### SUM
-```
-SELECT SUM(column_name)
-FROM table_name;
-```
-
-***SUM() is a function that takes the name of a column as an argument and returns the sum of all the values in that column.***
-
-### WITH
-```
-WITH temporary_name AS (
-   SELECT *
-   FROM table_name)
-SELECT *
-FROM temporary_name
-WHERE column_name operator value;
-```
-
-***WITH clause lets you store the result of a query in a temporary table using an alias. You can also define multiple temporary tables using a comma and with one instance of the WITH keyword.***
 
 ## Types of relations
 
