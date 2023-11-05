@@ -783,6 +783,7 @@ In summary, non-correlated subqueries are independent and can be executed once, 
    - The fifth level of normalization tasks you with avoiding join dependencies. This means that data that can be reconstructed by joining tables should be separated into individual tables that are stored without redundancy.
      
 ## Transaction 
+A transaction is a combined sequence of one or more SQL statements that is executed as a single, indivisible unit of work.
 ```sql
 START TRANSACTION;
 COMMIT;
