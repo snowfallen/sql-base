@@ -272,7 +272,7 @@ FROM table_name
 GROUP BY column_name
 HAVING COUNT(*) > value;
 ```
-***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions.***
+***HAVING was added to SQL because the WHERE keyword could not be used with aggregate functions. The use of HAVING is largely analogous to using WHERE. However, while WHERE is used to filter rows, HAVING is used for filtering groups!!!***
 
 ### ORDER BY
 ```
