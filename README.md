@@ -781,7 +781,14 @@ In summary, non-correlated subqueries are independent and can be executed once, 
 6. **Fifth Level (5NF - Fifth Normal Form)**:
    - The table is in 4NF, meaning it has atomic values, all columns depend on the primary key, there are no transitive dependencies or multivalued dependencies.
    - The fifth level of normalization tasks you with avoiding join dependencies. This means that data that can be reconstructed by joining tables should be separated into individual tables that are stored without redundancy.
-  
+     
+## Transaction 
+```sql
+START TRANSACTION;
+COMMIT;
+ROLLBACK;
+```
+
 ## ACID
 
 ***ACID*** is an acronym that represents a set of properties ensuring reliable transaction processing in a database. This acronym consists of the following properties:
@@ -816,15 +823,27 @@ Consequences: This can result in unfair outcomes and data inconsistency as Trans
 ***Read Uncommitted***:
 At this level, transactions can read even uncommitted changes made by other transactions.
 It allows for problems like dirty reads, non-repeatable reads, and phantom reads.
+```sql
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+```
 
 ***Read Committed***:
 Transactions wait for other transactions to finish their changes before reading data.
 It prevents problems like dirty reads but can still lead to non-repeatable reads and phantom reads.
+```sql
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+```
 
 ***Repeatable Read***:
 Transactions wait for other transactions to finish their changes before reading data. Additionally, they lock the rows they are reading to prevent changes by other transactions.
 It prevents problems like dirty reads and non-repeatable reads but still allows for phantom reads.
+```sql
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+```
 
 ***Serializable***:
 At the highest level, transactions block each other to avoid all forms of interaction anomalies.
 It prohibits all types of reading anomalies, such as dirty reads, non-repeatable reads, and phantom reads. However, it comes at the cost of executing everything sequentially, which can lead to limited resource availability. This level imposes the most restrictions on parallelism, potentially resulting in a high number of waiting transactions and reduced productivity.
+```sql
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+```
